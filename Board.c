@@ -7,34 +7,33 @@
 //const float SVMY = 0.00891816783986232;
 //const float SVMX = 0.00941395494556475;
 
-//Kevin
 void liftPen()
 {
 	setServoPosition(S4, 1, 20);
 	wait1Msec(200);
 }
-//Kevin
+
 void lowerPen()
 {
 	setServoPosition(S4, 1, -20);
 	wait1Msec(200);
 }
-//Matthew
+
 void motorOff(){
 	motor[motorA] = 0;
 	motor[motorB] = 0;
 	motor[motorC] = 0;
 }
-//Allison
+
 void setYPower(int power){
 	motor[motorA] = -power;
 	motor[motorC] = -power;
 }
-//Allison
+
 void setXPower (int power){
 	motor[motorB] = -power;
 }
-//Allison
+
 void resetX(float *pos){
 	liftPen();
 	setXPower(-100);
@@ -43,7 +42,7 @@ void resetX(float *pos){
 	nMotorEncoder[motorB]=0;
 	pos[0]=0;
 }
-//Allison
+
 void resetY(float *pos){
 	liftPen();
 	setYPower(-100);
@@ -52,12 +51,12 @@ void resetY(float *pos){
 	nMotorEncoder[motorA]=0;
 	pos[1]=0;
 }
-//Allison
+
 void zero(float *pos){
 	resetX(pos);
 	resetY(pos);
 }
-//Allison & Matthew
+
 void moveDisplacement(float xCoord, float yCoord, float *pos, int power = 50){
 
 	nMotorEncoder[motorA]=0;
@@ -75,7 +74,7 @@ void moveDisplacement(float xCoord, float yCoord, float *pos, int power = 50){
 	pos[0] += xCoord;
 	pos[1] += yCoord;
 }
-//Allison
+
 void moveTo(float xCoord, float yCoord, float *pos){
 	//moveDisplacement(xCoord-pos[0], yCoord-pos[1], pos);
 	zero(pos);
@@ -97,7 +96,7 @@ int checkColor(int x, int y, float *pos)
 	}
 	return 0;
 }
-//Yuanpei
+
 void updateBoardColor(float *pos){
 	for (int i = 0; i<3; i++){
 		for (int j = 0; j<3; j++ ){
@@ -106,7 +105,7 @@ void updateBoardColor(float *pos){
 	}
 }
 /*
-//Allison
+
 void drawCircleOnBoard(float x0, float y0, float *pos){	//abs location of centre of circle
 	zero(pos);
 	liftPen();
@@ -132,7 +131,7 @@ void drawCircleOnBoard(float x0, float y0, float *pos){	//abs location of centre
 	liftPen();
 }
 */
-//Matthew
+
 void drawLineAbs(float xCoord1, float yCoord1, float xCoord2, float yCoord2, float * pos){
 	moveTo(xCoord1,yCoord1, pos);
 	lowerPen();
@@ -140,7 +139,7 @@ void drawLineAbs(float xCoord1, float yCoord1, float xCoord2, float yCoord2, flo
 	liftPen();
 	wait1Msec(300);
 }
-//Allison
+
 void drawLineRel(float xCoord, float yCoord, float * pos){
 	lowerPen();
 	moveDisplacement(xCoord, yCoord, pos);
@@ -148,7 +147,7 @@ void drawLineRel(float xCoord, float yCoord, float * pos){
 	liftPen();
 	wait1Msec(300);
 }
-//Allison
+
 void square(float length, float * pos){
 	liftPen();
 	moveDisplacement(-length/2,length/2,pos);
@@ -165,7 +164,7 @@ void square(float length, float * pos){
 	moveDisplacement(length/2,-length/2,pos);
 	wait1Msec(200);
 }
-//Allison
+
 void drawFrame(float *pos){
 	zero(pos);
   	drawLineAbs(0,300,900,300,pos);
@@ -180,7 +179,7 @@ void drawFrame(float *pos){
 		}
 	}
 }
-//Allison
+
 //Just for calibration
 void goToBoxes(float *pos){
 	zero(pos);
@@ -191,7 +190,7 @@ void goToBoxes(float *pos){
 		}
 	}
 }
-//Allison
+
 void drawX(float length, float *pos){
 	moveDisplacement(-length/2,-length/2,pos);
 	drawLineRel(length,length,pos);
@@ -200,7 +199,7 @@ void drawX(float length, float *pos){
 	liftPen();
 	moveDisplacement(length/2,-length/2,pos);
 }
-//Allison
+
 void plotMove(int box, float * pos){
 	int i = box/3;
 	int j = box%3;
@@ -209,7 +208,7 @@ void plotMove(int box, float * pos){
 	readBoard[i][j] = 2;
 	board[i][j] = 2;
 }
-//Kevin
+
 void drawEndCondition(float *pos, int endC)
 {
 	zero(pos);
@@ -266,7 +265,7 @@ void drawEndCondition(float *pos, int endC)
 
 	}
 }
-//Allison & Kevin
+
 void init(float *pos)
 {
 	SensorType[S1] = sensorColorNxtFULL;
@@ -290,7 +289,7 @@ void init(float *pos)
 	drawFrame(pos);
 
 }
-//Everyone
+
 task main()
 {
 	bool gameStart = 1;
